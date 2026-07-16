@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gold Calculator</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;600&display=swap');
+
+
+:root{
+    --cream:#f7f3ed;
+    --white:#ffffff;
+    --gold:#b08d57;
+    --text:#3b342a;
+    --muted:#756b5d;
+    --line:#eadcca;
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+    background:linear-gradient(135deg,#f8f1e7,#ffffff);
+    min-height:100vh;
+    padding:35px 15px;
+    color:var(--text);
+}
+
+
+
+.wrapper{
+    max-width:1100px;
+    margin:auto;
+}
+
+
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+
+.header h1{
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:52px;
+    letter-spacing:2px;
+
+}
+
+
+.header p{
+
+    color:var(--muted);
+    letter-spacing:1px;
+
+}
+
+
+
+.gold-line{
+
+    width:90px;
+    height:2px;
+    background:var(--gold);
+    margin:15px auto;
+
+}
+
+
+
+
+.layout{
+
+    display:grid;
+    grid-template-columns:1fr 260px;
+    gap:35px;
+    align-items:start;
+
+}
+
+
+
+
+
+.card,
+.table-card{
+
+    background:white;
+    border:1px solid var(--line);
+    box-shadow:0 15px 40px rgba(80,60,30,.08);
+    border-radius:5px;
+    padding:30px;
+
+}
+
+
+
+
+.card-container{
+
+    width:100%;
+
+}
+
+
+
+
+
+h2{
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:34px;
+    text-align:center;
+    margin-bottom:25px;
+
+}
+
+
+
+
+label{
+
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:8px;
+
+}
+
+
+.urdu{
+
+    direction:rtl;
+
+}
+
+
+
+input{
+
+    width:100%;
+    height:52px;
+
+    border:1px solid var(--line);
+    background:#fcfaf7;
+
+    padding:0 15px;
+
+    font-size:20px;
+
+    outline:none;
+
+}
+
+
+
+input:focus{
+
+    border-color:var(--gold);
+
+}
+
+
+
+
+.formula{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    background:#faf6ef;
+
+    border-top:2px solid var(--gold);
+
+    text-align:center;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    line-height:1.8;
+
+}
+
+
+
+.formula .urdu{
+
+    color:var(--muted);
+    font-size:15px;
+    margin-top:10px;
+
+}
+
+
+
+
+
+.table-card{
+
+    max-height:650px;
+    overflow-y:auto;
+
+}
+
+
+
+.table-card h2{
+
+    font-size:30px;
+
+}
+
+
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    background:var(--gold);
+    color:white;
+    padding:12px;
+
+}
+
+
+
+td{
+
+    text-align:center;
+    padding:10px;
+    border-bottom:1px solid var(--line);
+    font-weight:600;
+
+}
+
+
+
+
+.card{
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+
+    body{
+        padding:20px 12px;
+    }
+
+
+    .layout{
+
+        display:flex;
+        flex-direction:column;
+
+    }
+
+
+    .card-container{
+
+        order:1;
+
+    }
+
+
+    .table-card{
+
+        order:2;
+        width:100%;
+        max-height:500px;
+
+    }
+
+
+    .header h1{
+
+        font-size:40px;
+
+    }
+
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="wrapper">
+
+
+<div class="header">
+
+<h1>Gold Calculator</h1>
+
+<div class="gold-line"></div>
+
+<p>Precision Karat & Gold Conversion</p>
+
+</div>
+
+
+
+<div class="layout">
+
+
+<!-- CALCULATORS LEFT -->
+
+<div class="card-container">
+
+
+
+<div class="card">
+
+<h2>KAT</h2>
+
+
+<label>
+<span>Input Number</span>
+<span class="urdu">نمبر درج کریں</span>
+</label>
+
+
+<input 
+type="number"
+id="katInput"
+oninput="calculateKat()"
+>
+
+
+<div class="formula" id="katResult">
+
+0 ÷ 96 × 100 = 0.00%
+
+<div class="urdu">
+حساب: 0 ÷ 96 × 100 = 0.00%
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>Karat</h2>
+
+
+<label>
+<span>Input Number</span>
+<span class="urdu">نمبر درج کریں</span>
+</label>
+
+
+<input
+type="number"
+id="karatInput"
+oninput="calculateKarat()"
+>
+
+
+
+<div class="formula" id="karatResult">
+
+0 ÷ 24 × 100 = 0.00
+
+<br>
+
+100 - 0.00 = 100.00
+
+
+<div class="urdu">
+
+حساب:
+<br>
+0 ÷ 24 × 100 = 0.00
+<br>
+100 - 0.00 = 100.00
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- TABLE RIGHT -->
+
+<div class="table-card">
+
+
+<h2>Karat Table</h2>
+
+
+<table>
+
+<tr>
+<th>Value</th>
+<th>Karat</th>
+</tr>
+
+<tr><td>96</td><td>24K</td></tr>
+<tr><td>92</td><td>23K</td></tr>
+<tr><td>88</td><td>22K</td></tr>
+<tr><td>84</td><td>21K</td></tr>
+<tr><td>80</td><td>20K</td></tr>
+<tr><td>76</td><td>19K</td></tr>
+<tr><td>72</td><td>18K</td></tr>
+<tr><td>68</td><td>17K</td></tr>
+<tr><td>64</td><td>16K</td></tr>
+<tr><td>60</td><td>15K</td></tr>
+<tr><td>56</td><td>14K</td></tr>
+<tr><td>52</td><td>13K</td></tr>
+<tr><td>48</td><td>12K</td></tr>
+<tr><td>44</td><td>11K</td></tr>
+<tr><td>40</td><td>10K</td></tr>
+<tr><td>36</td><td>9K</td></tr>
+<tr><td>32</td><td>8K</td></tr>
+<tr><td>28</td><td>7K</td></tr>
+<tr><td>24</td><td>6K</td></tr>
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function calculateKat(){
+
+
+let value=document.getElementById("katInput").value;
+
+
+if(value===""){
+value=0;
+}
+
+
+let num=parseFloat(value);
+
+let answer=(num/96)*100;
+
+
+
+document.getElementById("katResult").innerHTML=`
+
+${num} ÷ 96 × 100 = ${answer.toFixed(2)}%
+
+<div class="urdu">
+حساب: ${num} ÷ 96 × 100 = ${answer.toFixed(2)}%
+</div>
+
+`;
+
+}
+
+
+
+
+
+function calculateKarat(){
+
+
+let value=document.getElementById("karatInput").value;
+
+
+if(value===""){
+value=0;
+}
+
+
+let num=parseFloat(value);
+
+
+let answer=(num/24)*100;
+
+let finalAnswer=100-answer;
+
+
+
+document.getElementById("karatResult").innerHTML=`
+
+${num} ÷ 24 × 100 = ${answer.toFixed(2)}
+
+<br>
+
+100 - ${answer.toFixed(2)} = ${finalAnswer.toFixed(2)}
+
+
+<div class="urdu">
+
+حساب:
+<br>
+
+${num} ÷ 24 × 100 = ${answer.toFixed(2)}
+
+<br>
+
+100 - ${answer.toFixed(2)} = ${finalAnswer.toFixed(2)}
+
+</div>
+
+`;
+
+}
+
+
+</script>
+
+
+</body>
+</html>
