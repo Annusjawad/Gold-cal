@@ -1,1 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gold Calculator</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;600&display=swap');
+
+
+:root{
+    --cream:#f7f3ed;
+    --white:#ffffff;
+    --gold:#b08d57;
+    --text:#3b342a;
+    --muted:#756b5d;
+    --line:#eadcca;
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+    background:linear-gradient(135deg,#f8f1e7,#ffffff);
+    min-height:100vh;
+    padding:35px 15px;
+    color:var(--text);
+}
+
+
+
+.wrapper{
+    max-width:1100px;
+    margin:auto;
+}
+
+
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+
+.header h1{
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:52px;
+    letter-spacing:2px;
+
+}
+
+
+.header p{
+
+    color:var(--muted);
+    letter-spacing:1px;
+
+}
+
+
+
+.gold-line{
+
+    width:90px;
+    height:2px;
+    background:var(--gold);
+    margin:15px auto;
+
+}
+
+
+
+
+.layout{
+
+    display:grid;
+    grid-template-columns:1fr 260px;
+    gap:35px;
+    align-items:start;
+
+}
+
+
+
+
+
+.card,
+.table-card{
+
+    background:white;
+    border:1px solid var(--line);
+    box-shadow:0 15px 40px rgba(80,60,30,.08);
+    border-radius:5px;
+    padding:30px;
+
+}
+
+
+
+
+.card-container{
+
+    width:100%;
+
+}
+
+
+
+
+
+h2{
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:34px;
+    text-align:center;
+    margin-bottom:25px;
+
+}
+
+
+
+
+label{
+
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:8px;
+    margin-top:15px;
+
+}
+
+label:first-of-type{
+    margin-top:0;
+}
+
+
+.urdu{
+
+    direction:rtl;
+
+}
+
+
+
+input, select{
+
+    width:100%;
+    height:52px;
+
+    border:1px solid var(--line);
+    background:#fcfaf7;
+
+    padding:0 15px;
+
+    font-size:20px;
+
+    outline:none;
+    color: var(--text);
+
+}
+
+
+
+input:focus, select:focus{
+
+    border-color:var(--gold);
+
+}
+
+
+
+
+.formula{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    background:#faf6ef;
+
+    border-top:2px solid var(--gold);
+
+    text-align:center;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    line-height:1.8;
+
+}
+
+
+
+.formula .urdu{
+
+    color:var(--muted);
+    font-size:15px;
+    margin-top:10px;
+
+}
+
+
+
+
+
+.table-card{
+
+    max-height:650px;
+    overflow-y:auto;
+
+}
+
+
+
+.table-card h2{
+
+    font-size:30px;
+
+}
+
+
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    background:var(--gold);
+    color:white;
+    padding:12px;
+
+}
+
+
+
+td{
+
+    text-align:center;
+    padding:10px;
+    border-bottom:1px solid var(--line);
+    font-weight:600;
+
+}
+
+
+
+
+.card{
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+
+    body{
+        padding:20px 12px;
+    }
+
+
+    .layout{
+
+        display:flex;
+        flex-direction:column;
+
+    }
+
+
+    .card-container{
+
+        order:1;
+
+    }
+
+
+    .table-card{
+
+        order:2;
+        width:100%;
+        max-height:500px;
+
+    }
+
+
+    .header h1{
+
+        font-size:40px;
+
+    }
+
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="wrapper">
+
+
+<div class="header">
+
+<h1>Gold Calculator</h1>
+
+<div class="gold-line"></div>
+
+<p>Precision Karat & Gold Conversion</p>
+
+</div>
+
+
+
+<div class="layout">
+
+
+<!-- CALCULATORS LEFT -->
+
+<div class="card-container">
+
+<!-- CARD 1: Ratti Weight Deduction (Kat in Ratti) -->
+<div class="card">
+<h2>Card 1: Ratti Weight Deduction</h2>
+
+<label>
+<span>Gross Weight (g)</span>
+<span class="urdu">مجموعی وزن (گرام)</span>
+</label>
+<input type="number" id="card1Weight" placeholder="Enter weight..." oninput="calculateCard1()">
+
+<label>
+<span>Ratti Cut / Kat (out of 96)</span>
+<span class="urdu">رٹی کٹ (96 میں سے)</span>
+</label>
+<input type="number" id="card1Ratti" placeholder="Enter ratti cut..." oninput="calculateCard1()">
+
+<div class="formula" id="card1Result">
+0 ÷ 96 × 0 = 0.00g
+<div class="urdu">حساب: 0</div>
+</div>
+</div>
+
+
+<!-- CARD 2: Percentage Weight Deduction (Kat in Percentage) -->
+<div class="card">
+<h2>Card 2: Percentage Weight Deduction</h2>
+
+<label>
+<span>Gross Weight (g)</span>
+<span class="urdu">مجموعی وزن (گرام)</span>
+</label>
+<input type="number" id="card2Weight" placeholder="Enter weight..." oninput="calculateCard2()">
+
+<label>
+<span>Percentage Cut (%)</span>
+<span class="urdu">فیصد کٹ (%)</span>
+</label>
+<input type="number" id="card2Percent" step="0.01" placeholder="Enter percentage..." oninput="calculateCard2()">
+
+<div class="formula" id="card2Result">
+0g - 0% = 0.000g
+<div class="urdu">حساب: 0</div>
+</div>
+</div>
+
+
+<!-- CARD 3: Price-Based Percentage Cut -->
+<div class="card">
+<h2>Card 3: Price Percentage Cut</h2>
+
+<label>
+<span>Base Price (e.g., 24K Price)</span>
+<span class="urdu">بیس قیمت</span>
+</label>
+<input type="number" id="card3Price" placeholder="Enter base price..." oninput="calculateCard3()">
+
+<label>
+<span>Percentage Cut (%)</span>
+<span class="urdu">فیصد کٹ (%)</span>
+</label>
+<input type="number" id="card3Percent" placeholder="Enter percentage cut..." oninput="calculateCard3()">
+
+<div class="formula" id="card3Result">
+0 - 0% = 0.00
+<div class="urdu">حساب: 0</div>
+</div>
+</div>
+
+
+<!-- CARD 4: Dynamic Karat Adjuster -->
+<div class="card">
+<h2>Card 4: Dynamic Karat Adjuster</h2>
+
+<label>
+<span>Price Karat (From Card 3)</span>
+<span class="urdu">قیمت کا کیرٹ (کارڈ 3 سے)</span>
+</label>
+<input type="number" id="card4PriceInput" placeholder="Auto-filled from Card 3 or enter manually..." oninput="calculateCard4()">
+
+<label>
+<span>Target Karat</span>
+<span class="urdu">ہدف کیرٹ</span>
+</label>
+<input type="number" id="card4TargetKarat" placeholder="Enter target karat..." oninput="calculateCard4()">
+
+<div class="formula" id="card4Result">
+Please fill Card 3 / price details above.
+<div class="urdu">براہ کرم پہلے اوپر قیمت اور کیرٹ کی تفصیلات درج کریں۔</div>
+</div>
+</div>
+
+
+<!-- EXISTING CARDS -->
+
+<div class="card">
+
+<h2>KAT</h2>
+
+
+<label>
+<span>Input Number</span>
+<span class="urdu">نمبر درج کریں</span>
+</label>
+
+
+<input 
+type="number"
+id="katInput"
+placeholder="Enter number..."
+oninput="calculateKat()"
+>
+
+
+<div class="formula" id="katResult">
+
+0 ÷ 96 × 100 = 0.00%
+
+<div class="urdu">
+حساب: 0 ÷ 96 × 100 = 0.00%
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>Karat</h2>
+
+
+<label>
+<span>Input Number</span>
+<span class="urdu">نمبر درج کریں</span>
+</label>
+
+
+<input
+type="number"
+id="karatInput"
+placeholder="Enter number..."
+oninput="calculateKarat()"
+>
+
+
+
+<div class="formula" id="karatResult">
+
+0 ÷ 24 × 100 = 0.00
+
+<br>
+
+100 - 0.00 = 100.00
+
+
+<div class="urdu">
+
+حساب:
+<br>
+0 ÷ 24 × 100 = 0.00
+<br>
+100 - 0.00 = 100.00
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- TABLE RIGHT -->
+
+<div class="table-card">
+
+
+<h2>Karat Table</h2>
+
+
+<table>
+
+<tr>
+<th>Value</th>
+<th>Karat</th>
+</tr>
+
+<tr><td>96</td><td>24K</td></tr>
+<tr><td>92</td><td>23K</td></tr>
+<tr><td>88</td><td>22K</td></tr>
+<tr><td>84</td><td>21K</td></tr>
+<tr><td>80</td><td>20K</td></tr>
+<tr><td>76</td><td>19K</td></tr>
+<tr><td>72</td><td>18K</td></tr>
+<tr><td>68</td><td>17K</td></tr>
+<tr><td>64</td><td>16K</td></tr>
+<tr><td>60</td><td>15K</td></tr>
+<tr><td>56</td><td>14K</td></tr>
+<tr><td>52</td><td>13K</td></tr>
+<tr><td>48</td><td>12K</td></tr>
+<tr><td>44</td><td>11K</td></tr>
+<tr><td>40</td><td>10K</td></tr>
+<tr><td>36</td><td>9K</td></tr>
+<tr><td>32</td><td>8K</td></tr>
+<tr><td>28</td><td>7K</td></tr>
+<tr><td>24</td><td>6K</td></tr>
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+// --- NEW CARDS LOGIC ---
+
+function calculateCard1() {
+    let weight = parseFloat(document.getElementById("card1Weight").value);
+    let ratti = parseFloat(document.getElementById("card1Ratti").value);
+
+    if (isNaN(weight) || isNaN(ratti)) {
+        document.getElementById("card1Result").innerHTML = `
+            0 ÷ 96 × 0 = 0.00g
+            <div class="urdu">حساب: براہ کرم تمام خانے پُر کریں</div>
+        `;
+        return;
+    }
+
+    let remainingRatti = 96 - ratti;
+    let netWeight = (remainingRatti / 96) * weight;
+
+    document.getElementById("card1Result").innerHTML = `
+        (${remainingRatti} ÷ 96) × ${weight}g = ${netWeight.toFixed(3)}g
+        <div class="urdu">
+        حساب: (${remainingRatti} ÷ 96) × ${weight} = ${netWeight.toFixed(3)} گرام
+        </div>
+    `;
+}
+
+function calculateCard2() {
+    let weight = parseFloat(document.getElementById("card2Weight").value);
+    let percent = parseFloat(document.getElementById("card2Percent").value);
+
+    if (isNaN(weight) || isNaN(percent)) {
+        document.getElementById("card2Result").innerHTML = `
+            0g - 0% = 0.000g
+            <div class="urdu">حساب: براہ کرم تمام خانے پُر کریں</div>
+        `;
+        return;
+    }
+
+    let deduction = (weight * percent) / 100;
+    let netWeight = weight - deduction;
+
+    document.getElementById("card2Result").innerHTML = `
+        ${weight}g - ${percent}% = ${netWeight.toFixed(3)}g
+        <div class="urdu">
+        حساب: ${weight} - ${percent}% = ${netWeight.toFixed(3)} گرام
+        </div>
+    `;
+}
+
+function calculateCard3() {
+    let price = parseFloat(document.getElementById("card3Price").value);
+    let percent = parseFloat(document.getElementById("card3Percent").value);
+
+    // Automatically sync Card 3's price input into Card 4's price field for convenience
+    if (!isNaN(price)) {
+        document.getElementById("card4PriceInput").value = price;
+        calculateCard4();
+    }
+
+    if (isNaN(price) || isNaN(percent)) {
+        document.getElementById("card3Result").innerHTML = `
+            0 - 0% = 0.00
+            <div class="urdu">حساب: براہ کرم تمام خانے پُر کریں</div>
+        `;
+        return;
+    }
+
+    let discount = (price * percent) / 100;
+    let finalPrice = price - discount;
+
+    document.getElementById("card3Result").innerHTML = `
+        ${price} - ${percent}% = ${finalPrice.toFixed(2)}
+        <div class="urdu">
+        حساب: ${price} - ${percent}% = ${finalPrice.toFixed(2)}
+        </div>
+    `;
+}
+
+function calculateCard4() {
+    let priceInput = parseFloat(document.getElementById("card4PriceInput").value);
+    let targetKarat = parseFloat(document.getElementById("card4TargetKarat").value);
+
+    if (isNaN(priceInput) || isNaN(targetKarat)) {
+        document.getElementById("card4Result").innerHTML = `
+            Please fill Card 3 / price details above.
+            <div class="urdu">براہ کرم پہلے اوپر قیمت اور کیرٹ کی تفصیلات درج کریں۔</div>
+        `;
+        return;
+    }
+
+    let calculatedPrice = (priceInput * targetKarat) / 24;
+    let impliedPercentCut = 100 - ((targetKarat / 24) * 100);
+
+    document.getElementById("card4Result").innerHTML = `
+        Matching ${targetKarat}K Price: ${calculatedPrice.toFixed(2)}<br>
+        Equivalent Cut: ${impliedPercentCut.toFixed(2)}%
+        <div class="urdu">
+        حساب: ${targetKarat}K کی مطابقت قیمت: ${calculatedPrice.toFixed(2)}<br>
+        مطلوبہ کٹ: ${impliedPercentCut.toFixed(2)}%
+        </div>
+    `;
+}
+
+
+// --- EXISTING SCRIPTS ---
+
+function calculateKat(){
+
+
+let value=document.getElementById("katInput").value;
+
+
+if(value===""){
+value=0;
+}
+
+
+let num=parseFloat(value);
+
+let answer=(num/96)*100;
+
+
+
+document.getElementById("katResult").innerHTML=`
+
+${num} ÷ 96 × 100 = ${answer.toFixed(2)}%
+
+<div class="urdu">
+حساب: ${num} ÷ 96 × 100 = ${answer.toFixed(2)}%
+</div>
+
+`;
+
+}
+
+
+
+
+
+function calculateKarat(){
+
+
+let value=document.getElementById("karatInput").value;
+
+
+if(value===""){
+value=0;
+}
+
+
+let num=parseFloat(value);
+
+
+let answer=(num/24)*100;
+
+let finalAnswer=100-answer;
+
+
+
+document.getElementById("karatResult").innerHTML=`
+
+${num} ÷ 24 × 100 = ${answer.toFixed(2)}
+
+<br>
+
+100 - ${answer.toFixed(2)} = ${finalAnswer.toFixed(2)}
+
+
+<div class="urdu">
+
+حساب:
+<br>
+
+${num} ÷ 24 × 100 = ${answer.toFixed(2)}
+
+<br>
+
+100 - ${answer.toFixed(2)} = ${finalAnswer.toFixed(2)}
+
+</div>
+
+`;
+
+}
+
+
+</script>
+
+
+</body>
+  </html>
 
