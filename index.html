@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gold Calculator</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;600&display=swap');
+
+
+:root{
+    --cream:#f7f3ed;
+    --white:#ffffff;
+    --gold:#b08d57;
+    --text:#3b342a;
+    --muted:#756b5d;
+    --line:#eadcca;
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+    background:linear-gradient(135deg,#f8f1e7,#ffffff);
+    min-height:100vh;
+    padding:35px 15px;
+    color:var(--text);
+}
+
+
+
+.wrapper{
+    max-width:1100px;
+    margin:auto;
+}
+
+
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+
+.header h1{
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:52px;
+    letter-spacing:2px;
+
+}
+
+
+.header p{
+
+    color:var(--muted);
+    letter-spacing:1px;
+
+}
+
+
+
+.gold-line{
+
+    width:90px;
+    height:2px;
+    background:var(--gold);
+    margin:15px auto;
+
+}
+
+
+
+
+.layout{
+
+    display:grid;
+    grid-template-columns:1fr 260px;
+    gap:35px;
+    align-items:start;
+
+}
+
+
+
+
+
+.card,
+.table-card{
+
+    background:white;
+    border:1px solid var(--line);
+    box-shadow:0 15px 40px rgba(80,60,30,.08);
+    border-radius:5px;
+    padding:30px;
+
+}
+
+
+
+
+.card-container{
+
+    width:100%;
+
+}
+
+
+
+
+
+h2{
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:34px;
+    text-align:center;
+    margin-bottom:25px;
+
+}
+
+
+
+
+label{
+
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:8px;
+    margin-top:15px;
+
+}
+
+label:first-of-type{
+    margin-top:0;
+}
+
+
+.urdu{
+
+    direction:rtl;
+
+}
+
+
+
+input{
+
+    width:100%;
+    height:52px;
+
+    border:1px solid var(--line);
+    background:#fcfaf7;
+
+    padding:0 15px;
+
+    font-size:20px;
+
+    outline:none;
+
+}
+
+
+
+input:focus{
+
+    border-color:var(--gold);
+
+}
+
+
+
+
+.formula{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    background:#faf6ef;
+
+    border-top:2px solid var(--gold);
+
+    text-align:center;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    line-height:1.8;
+
+}
+
+
+
+.formula .urdu{
+
+    color:var(--muted);
+    font-size:15px;
+    margin-top:10px;
+
+}
+
+
+
+
+
+.table-card{
+
+    max-height:650px;
+    overflow-y:auto;
+
+}
+
+
+
+.table-card h2{
+
+    font-size:30px;
+
+}
+
+
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    background:var(--gold);
+    color:white;
+    padding:12px;
+
+}
+
+
+
+td{
+
+    text-align:center;
+    padding:10px;
+    border-bottom:1px solid var(--line);
+    font-weight:600;
+
+}
+
+
+
+
+.card{
+
+    margin-bottom:25px;
+
+}
+
+
+
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+
+    body{
+        padding:20px 12px;
+    }
+
+
+    .layout{
+
+        display:flex;
+        flex-direction:column;
+
+    }
+
+
+    .card-container{
+
+        order:1;
+
+    }
+
+
+    .table-card{
+
+        order:2;
+        width:100%;
+        max-height:500px;
+
+    }
+
+
+    .header h1{
+
+        font-size:40px;
+
+    }
+
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="wrapper">
+
+
+<div class="header">
+
+<h1>Gold Calculator</h1>
+
+<div class="gold-line"></div>
+
+<p>Precision Karat & Gold Conversion</p>
+
+</div>
+
+
+
+<div class="layout">
+
+
+<!-- CALCULATORS LEFT -->
+
+<div class="card-container">
+
+
+<!-- KARAT DIFFERENCE & RATE EQUIVALENT CARD -->
+<div class="card">
+
+    <h2>
+        Karat Price Difference & Rate Equivalent
+        <br>
+        <span class="urdu">کیرٹ کی قیمت کا فرق اور ریٹ کا موازنہ</span>
+    </h2>
+
+    <label>
+        <span>24K Rate</span>
+        <span class="urdu">24 کیرٹ کا ریٹ</span>
+    </label>
+
+    <input
+        type="number"
+        id="crossRate24k"
+        placeholder="Enter 24K rate..."
+        oninput="calculateCrossKarat()"
+    >
+
+    <label>
+        <span>Target Karat (e.g., 18)</span>
+        <span class="urdu">ہدف کیرٹ (مثلاً 18)</span>
+    </label>
+
+    <input
+        type="number"
+        id="crossTargetKarat"
+        placeholder="Enter target karat..."
+        oninput="calculateCrossKarat()"
+    >
+
+    <div class="formula" id="crossResult">
+        Enter values above to calculate difference percentage and equivalent rate.
+        <div class="urdu">
+            حساب کتاب کے لیے اوپر دی گئی اقدار درج کریں۔
+        </div>
+    </div>
+
+</div>
+
+
+<!-- CUSTOMER JEWELLERY EVALUATION CARD -->
+<div class="card">
+
+    <h2>
+        Customer Jewellery Evaluation
+        <br>
+        <span class="urdu">گاہک کی زیورات کی جانچ پڑتال</span>
+    </h2>
+
+    <label>
+        <span>Price Set From Outside</span>
+        <span class="urdu">باہر سے طے شدہ قیمت</span>
+    </label>
+
+    <input
+        type="number"
+        id="custOutsidePrice"
+        oninput="calculateCustomerJewellery()"
+    >
+
+    <label>
+        <span>Given Weight (g)</span>
+        <span class="urdu">دیا گیا وزن (گرام)</span>
+    </label>
+
+    <input
+        type="number"
+        id="custGivenWeight"
+        oninput="calculateCustomerJewellery()"
+    >
+
+    <label>
+        <span>Rate for 24K</span>
+        <span class="urdu">24 کیرٹ کا ریٹ</span>
+    </label>
+
+    <input
+        type="number"
+        id="custRate24k"
+        oninput="calculateCustomerJewellery()"
+    >
+
+    <div class="formula" id="custResult">
+
+        0 × 12.15 × 23.85 ÷ 0 ÷ 0 = 0.00
+
+        <div class="urdu">
+
+            حساب: 0 × 12.15 × 23.85 ÷ 0 ÷ 0 = 0.00
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- READYMADE JEWELLERY CARD -->
+<div class="card">
+
+    <h2>
+        Readymade Jewellery
+        <br>
+        <span class="urdu">ریڈی میڈ جیولری</span>
+    </h2>
+
+    <label>
+        <span>Kat / Cut</span>
+        <span class="urdu">کٹ</span>
+    </label>
+
+    <input
+        type="number"
+        id="readymadeKat"
+        oninput="calculateReadymade()"
+    >
+
+    <br><br>
+
+    <label>
+        <span>Weight (g)</span>
+        <span class="urdu">وزن (گرام)</span>
+    </label>
+
+    <input
+        type="number"
+        id="readymadeWeight"
+        oninput="calculateReadymade()"
+    >
+
+    <div class="formula" id="readymadeResult">
+
+        0 ÷ 96 × 100 = 0.00%
+
+        <br><br>
+
+        0.00 - 100 = -100.00%
+
+        <br><br>
+
+        0 × -100.00% = 0.00 g
+
+        <div class="urdu">
+
+            حساب:
+
+            <br><br>
+
+            0 ÷ 96 × 100 = 0.00٪
+
+            <br><br>
+
+            0.00 - 100 = -100.00٪
+
+            <br><br>
+
+            0 × -100.00٪ = 0.00 گرام
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>KAT</h2>
+
+
+<label>
+<span>Input Number</span>
+<span class="urdu">نمبر درج کریں</span>
+</label>
+
+
+<input 
+type="number"
+id="katInput"
+oninput="calculateKat()"
+>
+
+
+<div class="formula" id="katResult">
+
+0 ÷ 96 × 100 = 0.00%
+
+<div class="urdu">
+حساب: 0 ÷ 96 × 100 = 0.00%
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>Karat</h2>
+
+
+<label>
+<span>Input Number</span>
+<span class="urdu">نمبر درج کریں</span>
+</label>
+
+
+<input
+type="number"
+id="karatInput"
+oninput="calculateKarat()"
+>
+
+
+
+<div class="formula" id="karatResult">
+
+0 ÷ 24 × 100 = 0.00
+
+<br>
+
+100 - 0.00 = 100.00
+
+
+<div class="urdu">
+
+حساب:
+<br>
+0 ÷ 24 × 100 = 0.00
+<br>
+100 - 0.00 = 100.00
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- TABLE RIGHT -->
+
+<div class="table-card">
+
+
+<h2>Karat Table</h2>
+
+
+<table>
+
+<tr>
+<th>Value</th>
+<th>Karat</th>
+</tr>
+
+<tr><td>96</td><td>24K</td></tr>
+<tr><td>92</td><td>23K</td></tr>
+<tr><td>88</td><td>22K</td></tr>
+<tr><td>84</td><td>21K</td></tr>
+<tr><td>80</td><td>20K</td></tr>
+<tr><td>76</td><td>19K</td></tr>
+<tr><td>72</td><td>18K</td></tr>
+<tr><td>68</td><td>17K</td></tr>
+<tr><td>64</td><td>16K</td></tr>
+<tr><td>60</td><td>15K</td></tr>
+<tr><td>56</td><td>14K</td></tr>
+<tr><td>52</td><td>13K</td></tr>
+<tr><td>48</td><td>12K</td></tr>
+<tr><td>44</td><td>11K</td></tr>
+<tr><td>40</td><td>10K</td></tr>
+<tr><td>36</td><td>9K</td></tr>
+<tr><td>32</td><td>8K</td></tr>
+<tr><td>28</td><td>7K</td></tr>
+<tr><td>24</td><td>6K</td></tr>
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+function calculateCrossKarat(){
+    let rate24k = parseFloat(document.getElementById("crossRate24k").value);
+    let targetKarat = parseFloat(document.getElementById("crossTargetKarat").value);
+
+    if(isNaN(rate24k) || isNaN(targetKarat)){
+        document.getElementById("crossResult").innerHTML = `
+            Please fill in both fields.
+            <div class="urdu">براہ کرم دونوں خانے پُر کریں۔</div>
+        `;
+        return;
+    }
+
+    let targetRate = rate24k * (targetKarat / 24);
+    let percentDifference = 100 - ((targetKarat / 24) * 100);
+
+    document.getElementById("crossResult").innerHTML = `
+        Equivalent Rate: ${targetRate.toFixed(2)}<br>
+        Difference from 24K: ${percentDifference.toFixed(2)}%
+        <div class="urdu">
+            مطلوبہ ریٹ: ${targetRate.toFixed(2)}<br>
+            24K سے فیصد فرق: ${percentDifference.toFixed(2)}%
+        </div>
+    `;
+}
+
+
+function calculateCustomerJewellery(){
+    let outsidePrice = document.getElementById("custOutsidePrice").value;
+    let givenWeight = document.getElementById("custGivenWeight").value;
+    let rate24k = document.getElementById("custRate24k").value;
+
+    if(outsidePrice === "") outsidePrice = 0;
+    if(givenWeight === "") givenWeight = 0;
+    if(rate24k === "") rate24k = 0;
+
+    outsidePrice = parseFloat(outsidePrice);
+    givenWeight = parseFloat(givenWeight);
+    rate24k = parseFloat(rate24k);
+
+    let finalAnswer = 0;
+    if(givenWeight !== 0 && rate24k !== 0){
+        finalAnswer = (outsidePrice * 12.15 * 23.85) / givenWeight / rate24k;
+    }
+
+    document.getElementById("custResult").innerHTML = `
+        (${outsidePrice} × 12.15 × 23.85) ÷ ${givenWeight} ÷ ${rate24k} = ${finalAnswer.toFixed(2)}
+        <div class="urdu">
+            حساب: (${outsidePrice} × 12.15 × 23.85) ÷ ${givenWeight} ÷ ${rate24k} = ${finalAnswer.toFixed(2)}
+        </div>
+    `;
+}
+
+
+function calculateReadymade(){
+
+    let kat = document.getElementById("readymadeKat").value;
+    let weight = document.getElementById("readymadeWeight").value;
+
+    if(kat==="") kat=0;
+    if(weight==="") weight=0;
+
+    kat = parseFloat(kat);
+    weight = parseFloat(weight);
+
+    let purity = (kat / 96) * 100;
+
+    let percentage = purity - 100;
+
+    let finalAnswer = weight * (percentage / 100);
+
+    document.getElementById("readymadeResult").innerHTML = `
+
+    ${kat} ÷ 96 × 100 = ${purity.toFixed(2)}%
+
+    <br><br>
+
+    ${purity.toFixed(2)} - 100 = ${percentage.toFixed(2)}%
+
+    <br><br>
+
+    ${weight} × ${percentage.toFixed(2)}% = ${finalAnswer.toFixed(2)} g
+
+    <div class="urdu">
+
+        حساب:
+
+        <br><br>
+
+        ${kat} ÷ 96 × 100 = ${purity.toFixed(2)}٪
+
+        <br><br>
+
+        ${purity.toFixed(2)} - 100 = ${percentage.toFixed(2)}٪
+
+        <br><br>
+
+        ${weight} × ${percentage.toFixed(2)}٪ = ${finalAnswer.toFixed(2)} گرام
+
+    </div>
+
+    `;
+
+}
+
+
+
+
+function calculateKat(){
+
+
+let value=document.getElementById("katInput").value;
+
+
+if(value===""){
+value=0;
+}
+
+
+let num=parseFloat(value);
+
+let answer=(num/96)*100;
+
+
+
+document.getElementById("katResult").innerHTML=`
+
+${num} ÷ 96 × 100 = ${answer.toFixed(2)}%
+
+<div class="urdu">
+حساب: ${num} ÷ 96 × 100 = ${answer.toFixed(2)}%
+</div>
+
+`;
+
+}
+
+
+
+
+
+function calculateKarat(){
+
+
+let value=document.getElementById("karatInput").value;
+
+
+if(value===""){
+value=0;
+}
+
+
+let num=parseFloat(value);
+
+
+let answer=(num/24)*100;
+
+let finalAnswer=100-answer;
+
+
+
+document.getElementById("karatResult").innerHTML=`
+
+${num} ÷ 24 × 100 = ${answer.toFixed(2)}
+
+<br>
+
+100 - ${answer.toFixed(2)} = ${finalAnswer.toFixed(2)}
+
+
+<div class="urdu">
+
+حساب:
+<br>
+
+${num} ÷ 24 × 100 = ${answer.toFixed(2)}
+
+<br>
+
+100 - ${answer.toFixed(2)} = ${finalAnswer.toFixed(2)}
+
+</div>
+
+`;
+
+}
+
+
+</script>
+
+
+</body>
+</html>
